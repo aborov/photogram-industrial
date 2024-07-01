@@ -11,10 +11,10 @@
             Resources
           </a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="/photos">Photos</a>
-            <a class="dropdown-item" href="/comments">Comments</a>
-            <a class="dropdown-item" href="/follow_requests">Follow Requests</a>
-            <a class="dropdown-item" href="/likes">Likes</a>
+            <%= link_to "Photos", photos_path, class: "dropdown-item" %>
+            <%= link_to "Comments", comments_path, class: "dropdown-item" %>
+            <%= link_to "Follow Requests", follow_requests_path, class: "dropdown-item" %>
+            <%= link_to "Likes", likes_path, class: "dropdown-item" %>
           </div>
         </li>
       </ul>
