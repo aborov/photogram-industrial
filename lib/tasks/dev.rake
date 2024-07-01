@@ -10,10 +10,9 @@ task sample_data: :environment do
     User.destroy_all
   end
 
-usernames = Array.new { Faker::Name.first_name }
-usernames << "alice"
-usernames << "bob"
-
+  usernames = Array.new { Faker::Name.first_name }
+  usernames << "alice"
+  usernames << "bob"
 
   usernames.each do |username|
     User.create(
