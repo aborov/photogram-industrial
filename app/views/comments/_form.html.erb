@@ -10,23 +10,14 @@
       </ul>
     </div>
   <% end %>
+  
+    <%= form.hidden_field :photo_id %>
 
-  <div>
-    <%= form.label :author_id, style: "display: block" %>
-    <%= form.text_field :author_id %>
+    <div class="mb-3">
+    <%= form.text_area :body, class: "form-control" %>
   </div>
 
   <div>
-    <%= form.label :photo_id, style: "display: block" %>
-    <%= form.text_field :photo_id %>
-  </div>
-
-  <div>
-    <%= form.label :body, style: "display: block" %>
-    <%= form.text_area :body %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+    <%= form.submit class: "btn btn-outline-secondary btn-block" %>
   </div>
 <% end %>
