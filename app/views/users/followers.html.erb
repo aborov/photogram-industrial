@@ -9,21 +9,24 @@
         <%= link_to "Posts", user_path(@user.username), class: "nav-link" %>
       </li>
       <li class="nav-item">
-        <%= link_to "Liked photos", liked_path(@user.username), class: "nav-link active" %>
+        <%= link_to "Liked photos", liked_path(@user.username), class: "nav-link" %>
       </li>
       <li class="nav-item">
         <%= link_to "Feed", feed_path(@user.username), class: "nav-link" %>
       </li>
       <li class="nav-item">
-        <%= link_to "Followers", followers_path(@user.username), class: "nav-link" %>
+        <%= link_to "Followers", followers_path(@user.username), class: "nav-link active" %>
       </li>
       <li class="nav-item">
         <%= link_to "Following", following_path(@user.username), class: "nav-link" %>
       </li>
     </ul>
+
+    <div class="list-group mt-3">
+      <% @user.followers.each do |follower| %>
+        <%= link_to follower.username, user_path(follower.username), { :class => "list-group-item list-group-item-action" } %>
+      <% end %>
+    </div>
+
   </div>
 </div>
-
-<% @user.liked_photos.each do |photo| %>
-  <%= render "photos/photo", photo: photo %>
-<% end %>
