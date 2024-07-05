@@ -6,7 +6,7 @@
 
     <ul class="nav nav-pills nav-justified">
       <li class="nav-item">
-        <%= link_to "Posts", user_path(@user.username), class: "nav-link active" %>
+        <%= link_to "Posts", user_path(@user.username), class: "nav-link" %>
       </li>
       <li class="nav-item">
         <%= link_to "Liked photos", liked_path(@user.username), class: "nav-link" %>
@@ -18,12 +18,15 @@
         <%= link_to "Followers", followers_path(@user.username), class: "nav-link" %>
       </li>
       <li class="nav-item">
-        <%= link_to "Following", following_path(@user.username), class: "nav-link" %>
+        <%= link_to "Following", following_path(@user.username), class: "nav-link active" %>
       </li>
     </ul>
+
+    <div class="list-group mt-3">
+      <% @user.leaders.each do |leader| %>
+        <%= link_to leader.username, user_path(leader.username), { :class => "list-group-item list-group-item-action" } %>
+      <% end %>
+    </div>
+
   </div>
 </div>
-
-<% @user.own_photos.each do |photo| %>
-  <%= render "photos/photo", photo: photo %>
-<% end %>

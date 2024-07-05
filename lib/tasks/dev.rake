@@ -10,7 +10,7 @@ task sample_data: :environment do
     User.destroy_all
   end
 
-  usernames = Array.new { Faker::Name.first_name }
+  usernames = (1..10).map { Faker::Internet.unique.username }
   usernames << "alice"
   usernames << "bob"
 
@@ -26,29 +26,28 @@ task sample_data: :environment do
   p "There are now #{User.count} users."
 
   users = User.all
+  alice = User.find_by({ :username => "alice" })
+  bob = User.find_by({ :username => "bob" })
 
   users.each do |first_user|
     users.each do |second_user|
       next if first_user == second_user
       if rand < 0.75
         first_user.sent_follow_requests.create(
-          recipient: second_user,
-          status: FollowRequest.statuses.keys.sample,
-        )
-      end
-
-      if rand < 0.75
-        second_user.sent_follow_requests.create(
-          recipient: first_user,
-          status: FollowRequest.statuses.keys.sample,
+          { :recipient => second_user, :status => "accepted" }
         )
       end
     end
   end
+
+  # Ensure Alice and Bob follow each other
+  alice.sent_follow_requests.create({ :recipient => bob, :status => "accepted" })
+  bob.sent_follow_requests.create({ :recipient => alice, :status => "accepted" })
+
   p "There are now #{FollowRequest.count} follow requests."
 
   users.each do |user|
-    rand(15).times do
+    rand(5..15).times do
       photo = user.own_photos.create(
         caption: Faker::Lorem.sentence,
         image: Faker::LoremFlickr.image,
@@ -61,15 +60,14 @@ task sample_data: :environment do
 
         if rand < 0.25
           photo.comments.create(
-            body: Faker::Quote.jack_handey,
+            body: Faker::Quote.famous_last_words,
             author: follower,
           )
         end
       end
     end
   end
-  p "There are now #{User.count} users."
-  p "There are now #{FollowRequest.count} follow requests."
+  
   p "There are now #{Photo.count} photos."
   p "There are now #{Like.count} likes."
   p "There are now #{Comment.count} comments."
